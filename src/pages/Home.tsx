@@ -4,6 +4,7 @@ import {calculateMedian, calculateMean ,calculateMode } from "../utilities/funct
 const Home = () => {
 const [flav, setFlav] = useState<{[key:string]:classStats}>({});
 const [gamma, setGamma] = useState<{[key:string]:classStats}>({});
+
   interface DataItem{
     Alcohol:number,
    "Malic Acid": number,
@@ -25,6 +26,7 @@ const [gamma, setGamma] = useState<{[key:string]:classStats}>({});
     mode:number
   
   }
+ 
   
   const dataset:DataItem[]=[
     {
@@ -2700,12 +2702,12 @@ const [gamma, setGamma] = useState<{[key:string]:classStats}>({});
   ]
 
 useEffect(() => {
-  // Calculate the statistics when the component mounts
+  // Calculated the statistics when the component mounts
   const response= calculateClasswiseGamma(dataset);
   const res= calculateClasswise(dataset);
-  console.log(response);
-  setFlav(response);
-  setGamma(res);
+  // console.log(response);
+  setFlav(res);
+  setGamma(response);
 
 }, []); 
 const calculateClasswise=(dataset:DataItem[]):{[key:string]:classStats}=>{
@@ -2715,17 +2717,22 @@ const calculateClasswise=(dataset:DataItem[]):{[key:string]:classStats}=>{
     if(!classData[className]){
       classData[className]=[];
     }
-   if(typeof(item.Flavanoids)==="string"){
-    classData[className].push(parseInt(item.Flavanoids));
+   
+   if(typeof(item.Flavanoids)== "string"){
+   
+    classData[className].push(parseFloat(item.Flavanoids));
+    
    }else{
     classData[className].push(item.Flavanoids);
+   
    }
     
   });
+ 
   const result:{[key:string]:classStats}={ };
   for(const className in classData){
     const data=classData[className];
-    console.log("in ",data);
+    
     result[className]={
       mean:calculateMean(data),
       median:calculateMedian(data),
@@ -2742,8 +2749,8 @@ const calculateClasswiseGamma=(dataset:DataItem[]):{[key:string]:classStats}=>{
     if(!classData[className]){
       classData[className]=[];
     }
-    if(typeof(item.Ash)==="string"){
-      const gamma=((parseInt(item.Ash))*(item.Hue))/((item.Magnesium));
+    if(typeof(item.Ash)=="string"){
+      const gamma=((parseFloat(item.Ash))*(item.Hue))/((item.Magnesium));
       classData[className].push(gamma);
     }
     else{
@@ -2779,18 +2786,18 @@ const calculateClasswiseGamma=(dataset:DataItem[]):{[key:string]:classStats}=>{
         <thead>
           <tr>
             <th>Class</th>
-            <th>Mean</th>
-            <th>Median</th>
-            <th>Mode</th>
+            <th> Flavanoids Mean</th>
+            <th> Flavanoids Median</th>
+            <th> Flavanoids Mode</th>
           </tr>
         </thead>
         <tbody>
           {Object.entries(flav).map(([className, stats], index) => (
             <tr key={index}>
               <td>{className}</td>
-              <td>{stats.mean.toFixed(2)}</td>
-              <td>{stats.median.toFixed(2)}</td>
-              <td>{stats.mode.toFixed(2)}</td>
+              <td>{stats.mean.toFixed(3)}</td>
+              <td>{stats.median.toFixed(3)}</td>
+              <td>{stats.mode.toFixed(3)}</td>
             
             </tr>
           ))}
@@ -2800,17 +2807,18 @@ const calculateClasswiseGamma=(dataset:DataItem[]):{[key:string]:classStats}=>{
         <thead>
           <tr>
             <th>Class</th>
-            <th>Mean</th>
-            <th>Median</th>
-            <th>Mode</th>
+            <th>Gamma Mean</th>
+            <th> Gamma Median</th>
+            <th>Gamma Mode</th>
           </tr>
         </thead>
         <tbody>
           {Object.entries(gamma).map(([className, stats], index) => (
             <tr key={index}>
               <td>{className}</td>
-              <td>{stats.mean.toFixed(2)}</td>
-              <td>{stats.median.toFixed(2)}</td>
+              <td>{stats.mean.toFixed(3)}</td>
+              <td>{stats.median.toFixed(3)}</td>
+              <td>{stats.mode.toFixed(3)}</td>
             
             </tr>
           ))}

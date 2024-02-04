@@ -1,27 +1,29 @@
 
-export const calculateMean=(data:string[]):number=>{
-    const sum=data.reduce((acc,item)=>acc+parseInt(item,10),0);
+export const calculateMean=(data:number[]):number=>{
+    console.log("mean",data);
+    //return type is number
+    const sum=data.reduce((acc,item)=>acc+item ,0);
     return(sum/data.length);
     }
-    export const calculateMode = (data: string[]): number => {
+    export const calculateMode = (data: number[]): number => {
         const countMap: { [key: string]: number } = {};
         data.forEach((item) => {
           countMap[item] = (countMap[item] || 0) + 1;
         });
       
-        let mode: string = '';
+        let mode: number = 0;
         let maxCount: number = 0;
       
         for (const key in countMap) {
           if (countMap[key] > maxCount) {
-            mode = key;
+            mode = parseFloat(key);
             maxCount = countMap[key];
           }
         }
-        const Intmode=parseInt(mode);
+        const Intmode=mode;
         return Intmode;
       };
-    export const calculateMedian = (data: string[]): number => {
+    export const calculateMedian = (data: number[]): number => {
       const numData: number[] = data.map(Number);
       numData.sort((a, b) => a - b);
       const mid: number = Math.floor(numData.length / 2);

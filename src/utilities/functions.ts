@@ -1,6 +1,6 @@
 
 export const calculateMean=(data:number[]):number=>{
-    console.log("mean",data);
+  
     //return type is number
     const sum=data.reduce((acc,item)=>acc+item ,0);
     return(sum/data.length);

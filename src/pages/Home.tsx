@@ -1,9 +1,11 @@
 import React,{useState,useEffect} from 'react';
 //imported mean,mode,median functions
 import {calculateMedian, calculateMean ,calculateMode } from "../utilities/functions"
+import Table from '../components/Table';
 const Home = () => {
 const [flav, setFlav] = useState<{[key:string]:classStats}>({});
 const [gamma, setGamma] = useState<{[key:string]:classStats}>({});
+const myString=["Flavanoids","Gamma"];
 
   interface DataItem{
     Alcohol:number,
@@ -2764,7 +2766,7 @@ const calculateClasswiseGamma=(dataset:DataItem[]):{[key:string]:classStats}=>{
   for(const className in classData){
     const data=classData[className];
 
-    console.log("in gamma",data);
+
     result[className]={
       mean:calculateMean(data),
       median:calculateMedian(data),
@@ -2782,48 +2784,9 @@ const calculateClasswiseGamma=(dataset:DataItem[]):{[key:string]:classStats}=>{
     <>
 
 <div>
-      <table>
-        <thead>
-          <tr>
-            <th>Class</th>
-            <th> Flavanoids Mean</th>
-            <th> Flavanoids Median</th>
-            <th> Flavanoids Mode</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Object.entries(flav).map(([className, stats], index) => (
-            <tr key={index}>
-              <td>{className}</td>
-              <td>{stats.mean.toFixed(3)}</td>
-              <td>{stats.median.toFixed(3)}</td>
-              <td>{stats.mode.toFixed(3)}</td>
-            
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <table>
-        <thead>
-          <tr>
-            <th>Class</th>
-            <th>Gamma Mean</th>
-            <th> Gamma Median</th>
-            <th>Gamma Mode</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Object.entries(gamma).map(([className, stats], index) => (
-            <tr key={index}>
-              <td>{className}</td>
-              <td>{stats.mean.toFixed(3)}</td>
-              <td>{stats.median.toFixed(3)}</td>
-              <td>{stats.mode.toFixed(3)}</td>
-            
-            </tr>
-          ))}
-        </tbody>
-      </table>
+  <Table flav={flav} name={myString[0]}/>
+  <Table flav={gamma} name={myString[1]}/>
+    
     </div>
    
    </>
